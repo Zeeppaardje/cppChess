@@ -1,0 +1,32 @@
+{
+    "tasks": [
+        {
+            "type": "shell",
+            "label": "CPP: Build all files in code/",
+            "command": "/usr/bin/g++",
+            "args": [
+                "-fdiagnostics-color=always",
+                "-g",
+                "${workspaceFolder}/code/*.cpp",
+                "-o",
+                "main",
+                "-lsfml-graphics",
+                "-lsfml-window", 
+                "-lsfml-system"
+            ],
+            "options": {
+                "cwd": "${workspaceFolder}"
+            },
+            "problemMatcher": [
+                "$gcc"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            },
+            "detail": "CPP: Build all files in code/"
+        }
+    ],
+    "version": "2.0.0"
+}
+
