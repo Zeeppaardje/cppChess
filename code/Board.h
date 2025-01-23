@@ -1,4 +1,4 @@
-#include <vector>
+#include <unordered_map>
 #include "Pieces.h"
 #include "Coordinate.h"
 #include "types.h"
@@ -10,13 +10,13 @@
 
 class Board{
     private:
-        std::vector<Piece> pieces;     
-        Coordinate bounds;
+        std::unordered_map<Coordinate,Piece*,HashFunction>* pieces; 
     public:
         Board(Coordinate bounds);
-        std::vector<Piece> getPieces();
-        void addPiece(Piece piece);
-        void removePiece(Piece piece);
+        Coordinate bounds;
+        std::unordered_map<Coordinate,Piece*,HashFunction>* getPieces() const;
+        void addPiece(Piece* piece);
+        void removePiece(Coordinate pos);
 };
 
 #endif
