@@ -2,6 +2,7 @@
 #include <unordered_map>
 #include "Pieces.h"
 #include "Coordinate.h"
+#include "hashFunctions.h"
 #include "types.h"
 
 
@@ -11,6 +12,15 @@ Board::Board(Coordinate bounds)
     this->pieces = new std::unordered_map<Coordinate,Piece*,HashFunction>;
 }
 
+Board::~Board()
+{
+
+    for (auto it = this->pieces->begin(); it != this->pieces->end(); it++)
+    {
+        delete it->second;
+    }
+    delete pieces;
+}
 std::unordered_map<Coordinate, Piece*, HashFunction>* Board::getPieces() const
 {
     return this->pieces;
@@ -18,8 +28,12 @@ std::unordered_map<Coordinate, Piece*, HashFunction>* Board::getPieces() const
 
 void Board::addPiece(Piece* piece)
 {
+    if (!piece){
+        return;
+    }
     (*this->pieces)[piece->getPosition()] = piece;
     piece->setBound(this->bounds);
+    piece->setBoard(this);
 }
 
 void Board::removePiece(Coordinate pos)

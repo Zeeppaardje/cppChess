@@ -1,15 +1,13 @@
 /* Ik weet dat Vectors al bestaan maar dit is een oefening*/
 
 
-#include <iostream>
 
 
 #ifndef COORDINATE
 
 #define COORDINATE
 
-
-
+#include <iostream>
 
 class Coordinate{
     // constructor / destructor

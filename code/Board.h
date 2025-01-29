@@ -1,11 +1,15 @@
+
+
+#ifndef BOARD
+#define BOARD
+
 #include <unordered_map>
 #include "Pieces.h"
 #include "Coordinate.h"
 #include "types.h"
 
-#ifndef BOARD
-#define BOARD
 
+class Piece;
 
 
 class Board{
@@ -13,6 +17,7 @@ class Board{
         std::unordered_map<Coordinate,Piece*,HashFunction>* pieces; 
     public:
         Board(Coordinate bounds);
+        ~Board();
         Coordinate bounds;
         std::unordered_map<Coordinate,Piece*,HashFunction>* getPieces() const;
         void addPiece(Piece* piece);

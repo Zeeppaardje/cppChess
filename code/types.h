@@ -6,4 +6,5 @@
 enum piece_color {WHITE,BLACK};
 
 
+
 #endif
