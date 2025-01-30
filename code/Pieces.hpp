@@ -3,11 +3,11 @@
 #ifndef PIECE
 #define PIECE
 
-#include "Coordinate.h"
-#include "hashFunctions.h"
+#include "Coordinate.hpp"
+#include "hashFunctions.hpp"
 #include <unordered_set>
-#include "types.h"
-#include "Board.h"
+#include "types.hpp"
+#include "Board.hpp"
 
 class Board;
 
@@ -18,13 +18,14 @@ class Piece{
     protected:
         Coordinate position;
         piece_color color;
-        std::string name;
         Coordinate bounds;
         Board* board;
+        int move_count; /* voor pawn */
     public:
-        
+        std::string name;
         Piece(Coordinate position,piece_color color);
         ~Piece();
+        void add_move_count();
         Coordinate  getPosition() const;
         piece_color getColor() const;
         std::string getImagePath() const;

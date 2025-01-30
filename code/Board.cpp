@@ -1,10 +1,10 @@
-#include "Board.h"
+#include "Board.hpp"
 #include <unordered_map>
-#include "Pieces.h"
-#include "Coordinate.h"
-#include "hashFunctions.h"
-#include "types.h"
-#include "ActionHandler.h"
+#include "Pieces.hpp"
+#include "Coordinate.hpp"
+#include "hashFunctions.hpp"
+#include "types.hpp"
+#include "ActionHandler.hpp"
 
 Board::Board(Coordinate bounds)
 {
@@ -24,7 +24,6 @@ Board::~Board()
 {
     for (auto it = this->pieces->begin(); it != this->pieces->end(); it++)
     {
-        std::cout << "deleting " << it->second->getPosition() << std::endl;
         delete it->second;
     }
     for (auto it = this->actions->begin(); it != this->actions->end(); it++){
@@ -36,6 +35,7 @@ Board::~Board()
 void Board::nextPlayer()
 {
     this->turn = (this->turn + 1) % this->playerAmount;
+    std::cout << turn << " aan de beurt" << std::endl;
 }
 
 void Board::action(Coordinate mouse)

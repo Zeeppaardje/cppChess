@@ -4,10 +4,10 @@
 #define BOARD
 
 #include <unordered_map>
-#include "Pieces.h"
-#include "Coordinate.h"
-#include "types.h"
-#include "ActionHandler.h"
+#include "Pieces.hpp"
+#include "Coordinate.hpp"
+#include "types.hpp"
+#include "ActionHandler.hpp"
 
 class Piece;
 class ActionHandler;

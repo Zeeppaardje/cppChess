@@ -3,9 +3,9 @@
 #ifndef FILEREADER
 #define FILEREADER
 
-#include "Board.h"
-#include "Pieces.h"
-#include "Coordinate.h"
+#include "Board.hpp"
+#include "Pieces.hpp"
+#include "Coordinate.hpp"
 #include <iostream>
 #include <fstream>
 #include <unordered_set>

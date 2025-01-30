@@ -4,8 +4,8 @@
 #ifndef Action
 #define Action
 
-#include "Board.h"
-#include "Coordinate.h"
+#include "Board.hpp"
+#include "Coordinate.hpp"
 
 class Board;
 

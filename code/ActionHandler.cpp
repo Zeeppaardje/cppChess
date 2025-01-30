@@ -1,14 +1,16 @@
-#include "ActionHandler.h"
+#include "ActionHandler.hpp"
 #include <iostream>
 #include <unordered_set>
-#include "hashFunctions.h"
+#include "hashFunctions.hpp"
 
 void SelectActionHandler::onClick(Coordinate mouse, Board *board)
 {
 
     if (board->getPieces()->find(mouse) != board->getPieces()->end()){
-        board->setSelectedPiece(board->getPieces()->at(mouse));
-        board->setState(PLAY);
+        if (board->getPieces()->at(mouse)->getColor() == board->getTurn()) {
+            board->setSelectedPiece(board->getPieces()->at(mouse));
+            board->setState(PLAY);
+        }
     }
     else{
         board->setSelectedPiece(nullptr);
@@ -41,6 +43,8 @@ void PlayActionHandler::onClick(Coordinate mouse, Board *board)
         board->getPieces()->erase(board->getSelectedPiece()->getPosition());
         board->getSelectedPiece()->setPosition(mouse);
         
+        board->nextPlayer();
+        board->getSelectedPiece()->add_move_count();
         board->setSelectedPiece(nullptr);
         board->setState(SELECT);
     }

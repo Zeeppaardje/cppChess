@@ -1,13 +1,13 @@
 #include <iostream>
 #include <string>
 #include <unordered_set>
-#include "Coordinate.h"
+#include "Coordinate.hpp"
 #include <SFML/Graphics.hpp>
-#include "Pieces.h"
-#include "types.h"
-#include "Board.h"
+#include "Pieces.hpp"
+#include "types.hpp"
+#include "Board.hpp"
 #include "math.h"
-#include "fileReader.h"
+#include "fileReader.hpp"
 
 #define X1 Coordinate(1,0)
 #define Y1 Coordinate(0,1)
@@ -80,7 +80,7 @@ int main() {
                     Piece* piece = board->getPieces()->at(Coordinate(x,y));
                     sf::Texture texture;
                     if (!texture.loadFromFile(piece->getImagePath())){
-                        cout << "Could not load " << piece->getImagePath();
+                    std::cerr << "Could not load " << piece->getImagePath() << std::endl;
                         return 1;
                     }
                     sf::Sprite sprite;
