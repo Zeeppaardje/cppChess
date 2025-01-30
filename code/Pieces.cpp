@@ -72,7 +72,6 @@ bool validCoordinate(Board* board,Coordinate coord,piece_color c){
 Pawn::Pawn(Coordinate pos, piece_color color) : Piece(pos,color)
 {
     this->name = "pawn";
-    this->firstMove = true;
 }
 
 std::unordered_set<Coordinate,HashFunction> Pawn::possible_moves()
@@ -81,9 +80,6 @@ std::unordered_set<Coordinate,HashFunction> Pawn::possible_moves()
 
     std::unordered_set<Coordinate,HashFunction> moves;
     int steps = 1;
-    if (this->firstMove){
-        steps = 2;
-    }
     for (int i = 1; i <= steps; i ++){
         int y = this->position.y + i * color_direction[this->color].y;
         Coordinate newCoord(this->position.x,y);
@@ -109,7 +105,7 @@ std::unordered_set<Coordinate, HashFunction> King::possible_moves()
         for (int j = -1; j <= 1; j++)
         {
 
-            Coordinate newCoord(this->position.x + i,this->position.y + j);
+            Coordinate newCoord = this->position + Coordinate(i,j);
             if (validCoordinate(this->board,newCoord,this->color)){
                 moves.insert(newCoord);
             }
@@ -119,6 +115,17 @@ std::unordered_set<Coordinate, HashFunction> King::possible_moves()
     return moves;
 }
 
+std::unordered_set<Coordinate, HashFunction> movesDirection(Coordinate start,Coordinate direction,piece_color color,Board* board){
+    std::unordered_set<Coordinate, HashFunction> moves;
+    int steps = 1;
+    while (validCoordinate(board,start + steps * direction,color)){
+        moves.insert(start + steps * direction);
+        if (board->getPieces()->find(start + steps * direction) != board->getPieces()->end() && board->getPieces()->at(start + steps * direction)->getColor() != color)
+            break;
+        steps += 1;
+    }
+    return moves;
+}
 
 Queen::Queen(Coordinate pos, piece_color color) : Piece(pos,color)
 {
@@ -127,7 +134,15 @@ Queen::Queen(Coordinate pos, piece_color color) : Piece(pos,color)
 
 std::unordered_set<Coordinate, HashFunction> Queen::possible_moves()
 {
-    return std::unordered_set<Coordinate, HashFunction>();
+    std::unordered_set<Coordinate, HashFunction> moves;
+
+    for (int i = -1; i < 2; i++){
+        for (int j = -1; j < 2; j ++){
+            if (i != 0 || j != 0)
+                moves.merge(movesDirection(this->position,Coordinate(i,j),this->color,this->board));
+        }
+    }
+    return moves;
 }
 
 Rook::Rook(Coordinate pos, piece_color color) : Piece(pos,color)
@@ -137,7 +152,15 @@ Rook::Rook(Coordinate pos, piece_color color) : Piece(pos,color)
 
 std::unordered_set<Coordinate, HashFunction> Rook::possible_moves()
 {
-    return std::unordered_set<Coordinate, HashFunction>();
+    std::unordered_set<Coordinate, HashFunction> moves;
+
+    for (int i = -1; i < 2; i++){
+        for (int j = -1; j < 2; j ++){
+            if ((i == 0) != (j == 0))
+                moves.merge(movesDirection(this->position,Coordinate(i,j),this->color,this->board));
+        }
+    }
+    return moves;
 }
 
 Bishop::Bishop(Coordinate pos, piece_color color) : Piece(pos,color)
@@ -147,7 +170,15 @@ Bishop::Bishop(Coordinate pos, piece_color color) : Piece(pos,color)
 
 std::unordered_set<Coordinate, HashFunction> Bishop::possible_moves()
 {
-    return std::unordered_set<Coordinate, HashFunction>();
+    std::unordered_set<Coordinate, HashFunction> moves;
+
+    for (int i = -1; i < 2; i++){
+        for (int j = -1; j < 2; j ++){
+            if (i != 0 && j != 0)
+                moves.merge(movesDirection(this->position,Coordinate(i,j),this->color,this->board));
+        }
+    }
+    return moves;
 }
 
 Knight::Knight(Coordinate pos, piece_color color) : Piece(pos,color)

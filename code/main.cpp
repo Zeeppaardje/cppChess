@@ -14,21 +14,19 @@
 
 using namespace std;
 
+int wx = 800;
+int wy = wx;
+
+int mouseX = -1;
+int mouseY = -1;
+
+int bordHeight = 8;
+int tileSize = wx / bordHeight;
+
 
 int main() {
 
-    int wx = 800;
-    int wy = wx;
-
-    int mouseX = -1;
-    int mouseY = -1;
-
-    int bordHeight = 8;
-    int tileSize = wx / bordHeight;
-
     Board* board = readBoard("saves/default.txt");
-
-    Piece* clickedPiece = NULL;
 
     sf::RenderWindow window(sf::VideoMode(wx, wy), "Schaken");
 
@@ -45,18 +43,7 @@ int main() {
             }
 
             if (event.type == sf::Event::MouseButtonPressed){
-                
-                if (clickedPiece){
-                    if (Coordinate(mouseX,mouseY) == clickedPiece->getPosition()){
-                        clickedPiece = nullptr;
-                    }
-                }
-                else if (board->getPieces()->find(Coordinate(mouseX,mouseY)) != board->getPieces()->end()){
-                    clickedPiece = board->getPieces()->at(Coordinate(mouseX,mouseY));
-                }
-                else{
-                    clickedPiece = NULL;
-                }
+                board->action(Coordinate(mouseX,mouseY));
             }
             
         }
@@ -107,9 +94,9 @@ int main() {
             }
         }
         // render moves
-        if (clickedPiece){
+        if (board->getSelectedPiece()){
             
-            auto moves = clickedPiece->possible_moves();
+            auto moves = board->getSelectedPiece()->possible_moves();
             for (Coordinate pos : moves){
                 sf::CircleShape moveCircle(20);
                 moveCircle.setOrigin(moveCircle.getRadius(),moveCircle.getRadius());
@@ -122,5 +109,8 @@ int main() {
         window.display();
         window.clear();
     }
+
+    delete board;
+
     return 0;
 }

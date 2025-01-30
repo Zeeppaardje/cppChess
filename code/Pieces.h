@@ -37,8 +37,6 @@ class Piece{
 
 
 class Pawn: public Piece{
-    private:
-        bool firstMove;
     public:
         Pawn(Coordinate pos,piece_color color);
         virtual std::unordered_set<Coordinate,HashFunction> possible_moves();       
